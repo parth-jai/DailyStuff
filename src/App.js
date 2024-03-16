@@ -1,23 +1,46 @@
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
 
 function App() {
+
+  const [text,setText] = useState('');
+  const [name,setName] = useState('love');
+
+  //cariation-1 --> Every Render
+  //useEffect(()=>{
+    //console.log("UI Rendering")
+  //});
+
+
+  //variation-2 --> First Render
+  //useEffect( () => {
+    //console.log("UI Rendering");
+  //},[]);
+
+
+  //variation-3 --> on first render + dependency changes
+  //useEffect(()=>{
+    //console.log("UI Render responded");
+  //},[name]);
+
+
+  //variation-4 --> to handle unmounting of a component
+  useEffect(()=>{ //adding listner
+    console.log('listner added');
+    return() => { //these will clean first and then adding new listner
+      console.log('listner removed');
+    }
+  },[text]);
+
+
+  function changeHandler(event){
+    console.log(text);
+    setText(event.target.value);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input type='text' onChange={changeHandler}></input>
     </div>
   );
 }
